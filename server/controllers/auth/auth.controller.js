@@ -18,6 +18,9 @@ export const authController = {
     },
 
     getUser: async (req, res) => {
+        console.log("Session from the client :", req.session);
+        console.log("Result of is Authenticated : ", req.isAuthenticated());
+        console.log("User:", req.user);
         try {
             if (req.isAuthenticated()) {
                 const user = await userModel.findOne({ email: req?.user?.email }, { __v: 0 });
