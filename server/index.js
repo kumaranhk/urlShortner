@@ -8,6 +8,7 @@ import passport from "./configs/passport.js";
 import mongooseConnect from "./configs/mongoose-connect.js";
 import cors from 'cors';
 import corsMiddleware from "./middlewares/cors.js";
+import MongoStore from "connect-mongo";
 
 dotenv.config();
 const app = express();
@@ -27,10 +28,14 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGOOSE_URI,
+        collectionName: "sessions",
+    }),
     cookie: {
         maxAge: 24 * 60 * 60 * 1000,
         secure: process.env.NODE_ENV === 'prodution' ? true : false,
-        httpOnly: process.env.NODE_ENV === 'prodution' ? true : false,
+        httpOnly: true,
     }
 }));
 
