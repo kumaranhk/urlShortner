@@ -20,6 +20,7 @@ app.use(cors({
 app.use(corsMiddleware);
 
 app.use(express.json());
+app.set("trust proxy", 1);
 app.use(logger);
 app.use(errorHandler);
 mongooseConnect();
